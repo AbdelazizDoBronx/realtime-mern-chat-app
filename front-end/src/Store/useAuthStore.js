@@ -33,7 +33,7 @@ export const useAuthStore = create((set) => ({
       toast.success('Sign-up successful! Welcome aboard!'); // Success toast
     } catch (error) {
       console.error('signUp error', error);
-      toast.error('Sign-up failed. Please try again.'); // Error toast
+      toast.error('Sign-up failed. Please try again.',error.response.data.message); // Error toast
     } finally {
       set({ isSigningInUp: false });
     }
