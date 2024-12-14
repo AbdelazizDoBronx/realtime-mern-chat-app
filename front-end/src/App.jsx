@@ -8,9 +8,12 @@ import ProfilePage from './Pages/ProfilePage'
 import Navbar from './Components/Navbar'
 import {useAuthStore} from './Store/useAuthStore'
 import { Toaster } from 'react-hot-toast'
+import { useThemeStore } from './Store/useThemeStore'
 
 const App = () => {
   const {authUser,checkAuth,isCheckingAuth} = useAuthStore();
+  const { theme } = useThemeStore();
+
 
   useEffect(()=>{checkAuth()},[checkAuth])
   console.log({authUser})
@@ -23,7 +26,7 @@ const App = () => {
     )
   }
   return (
-    <div>
+    <div data-theme={theme}>
       <Navbar />
       <Toaster position="top-center" /> 
       <Routes>
