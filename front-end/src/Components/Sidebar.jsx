@@ -5,7 +5,7 @@ import { useChatStore } from '../store/useChatStore';
 
 const Sidebar = () => {
   const { authUser } = useAuthStore();  // Assuming you have all users in your store
-  const {getUsers,users,selectedUser} = useChatStore();
+  const {getUsers,users,selectedUser,setSelectedUser} = useChatStore();
 
 
   useEffect(()=>{getUsers()},[getUsers])
@@ -30,7 +30,7 @@ const Sidebar = () => {
         <ul className="space-y-4 mt-4">
           {users && users.length > 0 ? (
             users.map((user) => (
-              <button key={user._id}  className="flex items-center p-4 w-full hover:bg-gray-700 rounded-lg" onClick={()=>{selectedUser(user)}}>
+              <button key={user._id}  className={`flex items-center p-4 w-full hover:bg-gray-600 rounded-lg ${selectedUser?._id === user?._id ?'bg-gray-700':''}`} onClick={()=>{setSelectedUser(user)}}>
                 <img
                   src={user.profilePic || 'https://via.placeholder.com/150'}
                   alt={user.fullName}
