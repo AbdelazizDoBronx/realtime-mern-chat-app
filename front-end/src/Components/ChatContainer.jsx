@@ -12,13 +12,19 @@ const ChatContainer = () => {
     getMessages,
     isChatLoading,
     selectedUser,
+    subscribeToMessages,
+    unSubscribeToMessage,
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
 
   useEffect(() => {
     getMessages(selectedUser._id);
-  }, [selectedUser._id, getMessages]);
+    subscribeToMessages();
+    return ()=>{
+      unSubscribeToMessage();
+    }
+  }, [selectedUser._id, getMessages,subscribeToMessages,unSubscribeToMessage]);
 
   useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -26,17 +32,8 @@ const ChatContainer = () => {
     }
   }, [messages]);
 
-  if (isChatLoading) {
-    return (
-      <div className="flex-1 flex flex-col overflow-auto">
-        <ChatHeader />
-        <MessageInput />
-      </div>
-    );
-  }
-
   return (
-    <div className="flex-1 flex flex-col overflow-auto">
+    <div className="flex-1 flex flex-col">
       <ChatHeader />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
